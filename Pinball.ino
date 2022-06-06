@@ -1,30 +1,88 @@
-int leftFlipper = 30;
-int rightFlipper = 31;
+#include <LedFlasher.h>
+
+// Solenoids
+int leftFlipperSolenoid = 30;
+int rightFlipperSolenoid = 31;
+
+// User Buttons
 int leftFlipperButton = A0;
 int rightFlipperButton = A1;
 
-void setup() {
+// Testing Buttons
+
+// Playfield Switches
+int shooterLaneSwitch = A2;
+
+// Playfield Lights
+int shootAgain = 12;
+LedFlasher leftFlasher (13,300,400);
+LedFlasher rightFlasher (11, 300, 400);
+
+void setup()
+{
   // put your setup code here, to run once:
   Serial.begin(9600);
-  pinMode(leftFlipper,OUTPUT);
-  pinMode(rightFlipper,OUTPUT);
-  pinMode(leftFlipperButton,INPUT);
-  pinMode(rightFlipperButton,INPUT);
+  pinMode(leftFlipperSolenoid, OUTPUT);
+  pinMode(rightFlipperSolenoid, OUTPUT);
+  pinMode(leftFlipperButton, INPUT);
+  pinMode(rightFlipperButton, INPUT);
+  pinMode(shooterLaneSwitch,INPUT);
+  pinMode(shootAgain,OUTPUT);
+  leftFlasher.begin();
+  rightFlasher.begin();
 }
 
-void loop() {
+void loop()
+{
   // put your main code here, to run repeatedly:
-if (digitalRead(leftFlipperButton)==1){
-  digitalWrite(leftFlipper,HIGH);
-}
-else{
-  digitalWrite(leftFlipper,LOW);
-}
-if (digitalRead(rightFlipperButton)==1){
-  digitalWrite(rightFlipper,HIGH);
-}
-else{
-  digitalWrite(rightFlipper,LOW);
+  if (digitalRead(leftFlipperButton) == 1)
+  {
+    fireLeftFlipper(1);
+    leftFlasher.update();
+  }
+  else
+  {
+    fireLeftFlipper(0);
+  }
+  if (digitalRead(rightFlipperButton) == 1)
+  {
+    fireRightFlipper(1);
+    rightFlasher.update();
+  }
+  else
+  {
+    fireRightFlipper(0);
+  }
+  if(digitalRead(shooterLaneSwitch)==1){
+    digitalWrite(shootAgain,HIGH);
+  }
+  else{
+    digitalWrite(shootAgain,LOW);
+  }
+
 }
 
+void fireLeftFlipper(int fireState)
+{
+  if (fireState == 1)
+  {
+    digitalWrite(leftFlipperSolenoid, HIGH);
+    //Serial.println("test");
+  }
+  else
+  {
+    digitalWrite(leftFlipperSolenoid, LOW);
+  }
+}
+
+void fireRightFlipper(int fireState)
+{
+  if (fireState == 1)
+  {
+    digitalWrite(rightFlipperSolenoid, HIGH);
+  }
+  else
+  {
+    digitalWrite(rightFlipperSolenoid, LOW);
+  }
 }
