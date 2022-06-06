@@ -1,5 +1,3 @@
-#include <LedFlasher.h>
-
 // Solenoids
 int leftFlipperSolenoid = 30;
 int rightFlipperSolenoid = 31;
@@ -15,8 +13,7 @@ int shooterLaneSwitch = A2;
 
 // Playfield Lights
 int shootAgain = 12;
-LedFlasher leftFlasher (13,300,400);
-LedFlasher rightFlasher (11, 300, 400);
+
 
 void setup()
 {
@@ -28,8 +25,6 @@ void setup()
   pinMode(rightFlipperButton, INPUT);
   pinMode(shooterLaneSwitch,INPUT);
   pinMode(shootAgain,OUTPUT);
-  leftFlasher.begin();
-  rightFlasher.begin();
 }
 
 void loop()
@@ -38,7 +33,6 @@ void loop()
   if (digitalRead(leftFlipperButton) == 1)
   {
     fireLeftFlipper(1);
-    leftFlasher.update();
   }
   else
   {
@@ -47,7 +41,6 @@ void loop()
   if (digitalRead(rightFlipperButton) == 1)
   {
     fireRightFlipper(1);
-    rightFlasher.update();
   }
   else
   {
