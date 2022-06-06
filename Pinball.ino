@@ -17,7 +17,7 @@ int oneTwoSwitch = A6;
 int oneThreeSwitch = A7;
 
 // Playfield Lights
-int shootAgain = 12;
+int shootAgain = 39;
 int Bonus1k = 40;
 int Bonus2k = 41;
 int Bonus4k = 42;
@@ -43,7 +43,7 @@ int gameOverState = 1;
 
 int bonus = 0; // Value of the bonus divided by 1000
 
-void setup()
+void setup()//No plan survives first contact with the enemy.
 {
   // Setup all the things.
   Serial.begin(9600);
@@ -225,7 +225,7 @@ void gameOverHandler(){
   if(digitalRead(troughSwitch)== HIGH && shootAgainState == 1){
     shootAgainState = 0;
   }
-  else{
+  else if (digitalRead(troughSwitch)==HIGH && shootAgainState == 0){//We broke it Jim
     Serial.print("Final score is ");
     Serial.print(score);
     Serial.println(" points, Well done!");
